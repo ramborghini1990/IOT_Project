@@ -1,0 +1,132 @@
+{
+  "baseTopic": "ThiefDetector",
+  "clientID": "ThiefDetector_Client_Act",
+  "DCID_dict": {
+    "1-1-1": {
+      "devicesList": [
+        {
+          "deviceID": 10101,
+          "deviceName": "light_switch",
+          "deviceStatus": "OFF",
+          "availableStatuses": ["DISABLE", "OFF", "ON"],
+          "deviceLocation": { "houseID": "1", "floorID": "1", "unitID": "1" },
+          "measureType": ["Switch"],
+          "availableServices": ["MQTT"],
+          "servicesDetails": [
+            {
+              "serviceType": "MQTT",
+              "topic": ["ThiefDetector/commands/1/1/1/light_switch"]
+            }
+          ],
+          "lastUpdate": "2025-02-17 12:00:00"
+        }
+      ],
+      "lastUpdate": "2025-02-17 12:00:00"
+    },
+    "1-1-2": {
+      "devicesList": [
+        {
+          "deviceID": 10102,
+          "deviceName": "light_switch",
+          "deviceStatus": "OFF",
+          "availableStatuses": ["DISABLE", "OFF", "ON"],
+          "deviceLocation": { "houseID": "1", "floorID": "1", "unitID": "2" },
+          "measureType": ["Switch"],
+          "availableServices": ["MQTT"],
+          "servicesDetails": [
+            {
+              "serviceType": "MQTT",
+              "topic": ["ThiefDetector/commands/1/1/2/light_switch"]
+            }
+          ],
+          "lastUpdate": "2025-02-17 12:00:00"
+        }
+      ],
+      "lastUpdate": "2025-02-17 12:00:00"
+    },
+    "1-2-1": {
+      "devicesList": [
+        {
+          "deviceID": 10103,
+          "deviceName": "light_switch",
+          "deviceStatus": "OFF",
+          "availableStatuses": ["DISABLE", "OFF", "ON"],
+          "deviceLocation": { "houseID": "1", "floorID": "2", "unitID": "1" },
+          "measureType": ["Switch"],
+          "availableServices": ["MQTT"],
+          "servicesDetails": [
+            {
+              "serviceType": "MQTT",
+              "topic": ["ThiefDetector/commands/1/2/1/light_switch"]
+            }
+          ],
+          "lastUpdate": "2025-02-17 12:00:00"
+        }
+      ],
+      "lastUpdate": "2025-02-17 12:00:00"
+    },
+    "2-1-1": {
+      "devicesList": [
+        {
+          "deviceID": 20101,
+          "deviceName": "light_switch",
+          "deviceStatus": "OFF",
+          "availableStatuses": ["DISABLE", "OFF", "ON"],
+          "deviceLocation": { "houseID": "2", "floorID": "1", "unitID": "1" },
+          "measureType": ["Switch"],
+          "availableServices": ["MQTT"],
+          "servicesDetails": [
+            {
+              "serviceType": "MQTT",
+              "topic": ["ThiefDetector/commands/2/1/1/light_switch"]
+            }
+          ],
+          "lastUpdate": "2025-02-17 12:00:00"
+        }
+      ],
+      "lastUpdate": "2025-02-17 12:00:00"
+    },
+    "2-1-2": {
+      "devicesList": [
+        {
+          "deviceID": 20102,
+          "deviceName": "light_switch",
+          "deviceStatus": "OFF",
+          "availableStatuses": ["DISABLE", "OFF", "ON"],
+          "deviceLocation": { "houseID": "2", "floorID": "1", "unitID": "2" },
+          "measureType": ["Switch"],
+          "availableServices": ["MQTT"],
+          "servicesDetails": [
+            {
+              "serviceType": "MQTT",
+              "topic": ["ThiefDetector/commands/2/1/2/light_switch"]
+            }
+          ],
+          "lastUpdate": "2025-02-17 12:00:00"
+        }
+      ],
+      "lastUpdate": "2025-02-17 12:00:00"
+    },
+    "2-2-1": {
+      "devicesList": [
+        {
+          "deviceID": 20103,
+          "deviceName": "light_switch",
+          "deviceStatus": "OFF",
+          "availableStatuses": ["DISABLE", "OFF", "ON"],
+          "deviceLocation": { "houseID": "2", "floorID": "2", "unitID": "1" },
+          "measureType": ["Switch"],
+          "availableServices": ["MQTT"],
+          "servicesDetails": [
+            {
+              "serviceType": "MQTT",
+              "topic": ["ThiefDetector/commands/2/2/1/light_switch"]
+            }
+          ],
+          "lastUpdate": "2025-02-17 12:00:00"
+        }
+      ],
+      "lastUpdate": "2025-02-17 12:00:00"
+    }
+  }
+}
