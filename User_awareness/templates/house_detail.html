@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Madimi+One&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>House Detail</title>
+    <style>
+        body {
+            font-family: 'Anta', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-family: 'Madimi One', sans-serif;
+            color: #333;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .house-info p {
+            margin: 5px 0;
+        }
+
+        .data-chart {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+        }
+
+        .chart-card {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-card iframe {
+            border: none;
+            width: 100%;
+            height: 300px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .button.blue { background-color: #007bff; }
+        .button.green { background-color: #28a745; }
+        .button.red { background-color: #dc3545; }
+        .button.orange { background-color: #ffc107; }
+
+        .button:hover { opacity: 0.8; }
+
+        .device-info {
+            margin-top: 20px;
+        }
+
+        .device {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+
+        .device-name {
+            font-weight: bold;
+        }
+
+        .device-status {
+            color: green;
+        }
+
+        .device-status.off {
+            color: red;
+        }
+
+        @media screen and (max-width: 600px) {
+            .data-chart { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script>
+        function sendStatusMessage(deviceID, houseID, floorID, status) {
+            $.ajax({
+                type: "POST",
+                url: "/send_status_message",
+                data: JSON.stringify({ deviceID: deviceID, houseID: houseID, floorID: floorID, status: status }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    $('#confirmationModal .modal-body').text(response.message);
+                    $('#confirmationModal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>House Details</h2>
+        <div class="house-info">
+            <p>House ID: {{ house.houseID }}</p>
+            <p>Address: {{ house.address }}</p>
+            <p>Owner: {{ house.owner }}</p>
+        </div>
+        <div class="data-chart">
+            {% for device in house.devicesList %}
+                {% if device.measureType[0] in ["motion", "light"] %}
+                {% set field = device.measureType[0] %}
+                <div class="chart-card">
+                    <h3>{{ field }}</h3>
+                    <iframe src="https://thingspeak.com/channels/{{ channelID }}/charts/{{ fields[field][-1] }}?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=spline&update=15"></iframe>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="device-info">
+            <h3>Devices</h3>
+            {% for device in house.devicesList %}
+            <div class="device">
+                <p class="device-name">{{ device.deviceName }}</p>
+                <p class="device-status {{ 'off' if device.deviceStatus == 'OFF' else 'on' if device.deviceStatus == 'ON' else 'disabled' }}">
+                    Status: {{ device.deviceStatus }}
+                </p>
+                <div class="status-buttons">
+                    {% for status in device.availableStatuses %}
+                    <a href="#" class="button {{ get_button_class(status) }}" onclick="sendStatusMessage('{{ device.deviceID }}', '{{ house.houseID }}', '{{ house.floorID }}', '{{ status }}')">{{ status }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>Thief Detector Interface</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Madimi+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f1f4f6;
+            --text: #222;
+            --card: #ffffff;
+            --accent: #4caf50;
+            --header: #2e8b57;
+            --alert: #ff5252;
+        }
+        [data-theme="dark"] {
+            --bg: #121212;
+            --text: #f0f0f0;
+            --card: #1e1e1e;
+            --accent: #81c784;
+            --header: #1a4d3c;
+            --alert: #ff6b6b;
+        }
+        body {
+            font-family: 'Anta', sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Madimi One', sans-serif;
+        }
+        header {
+            background-color: var(--header);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .title {
+            background-color: var(--accent);
+            text-align: center;
+            padding: 15px;
+        }
+        .toggle-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: white;
+            color: black;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .house-card, .device-info {
+            background-color: var(--card);
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            padding: 15px;
+            margin: 15px;
+            position: relative;
+        }
+        .house-id {
+            background-color: #d4efdf;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            font-weight: bold;
+        }
+        .house-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            background-color: var(--accent);
+            color: white;
+            padding: 6px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+        }
+        .on { background-color: #4caf50; }
+        .off { background-color: #f44336; }
+        .disable { background-color: #9e9e9e; }
+        .detected { background-color: #ff9800; animation: pulse 1.5s infinite; }
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .icon {
+            margin-right: 5px;
+        }
+        section {
+            max-width: 1200px;
+            margin: auto;
+        }
+        small {
+            color: #888;
+            font-size: 0.85em;
+        }
+        .motion-alert {
+            background-color: var(--alert);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            animation: pulse 1.5s infinite;
+        }
+        .motion-alert span {
+            margin-left: 8px;
+        }
+        .security-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .secure {
+            background-color: #4caf50;
+            color: white;
+        }
+        .breach {
+            background-color: #f44336;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        .last-updated {
+            font-style: italic;
+            font-size: 0.8em;
+            margin-top: 5px;
+            color: #666;
+        }
+        .device-list {
+            margin-top: 10px;
+        }
+        .device-item {
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            background-color: rgba(0,0,0,0.03);
+        }
+        .refresh-info {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .countdown {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Thief Detector Interface</h1>
+        <button class="toggle-btn" onclick="toggleTheme()">🌙 Toggle Theme</button>
+    </header>
+
+    <main>
+        <section class="title">
+            <h2>Welcome to the Thief Detector Interface</h2>
+            <p>Monitor devices, view charts, and control smart homes.</p>
+        </section>
+
+        <div class="refresh-info">
+            Auto-refreshing in <span class="countdown">15</span> seconds
+        </div>
+
+        <section>
+            <h2>Available Houses</h2>
+            {% if houses %}
+                {% for house in houses %}
+                    <div class="house-card">
+                        <!-- Security Status Badge -->
+                        {% set has_motion = false %}
+                        {% for floor in house.floors %}
+                            {% for unit in floor.units %}
+                                {% set unit_key = house.houseID ~ '-' ~ floor.floorID ~ '-' ~ unit.unitID %}
+                                {% if unit_key in motion_alerts %}
+                                    {% set has_motion = true %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        
+                        <div class="security-status {% if has_motion %}breach{% else %}secure{% endif %}">
+                            {% if has_motion %}
+                                🚨 SECURITY BREACH
+                            {% else %}
+                                ✓ SECURE
+                            {% endif %}
+                        </div>
+
+                        <div class="house-id">🏠 {{ house.houseName }} (ID: {{ house.houseID }})</div>
+                        
+                        <!-- Motion Alerts -->
+                        {% for floor in house.floors %}
+                            {% for unit in floor.units %}
+                                {% set unit_key = house.houseID ~ '-' ~ floor.floorID ~ '-' ~ unit.unitID %}
+                                {% if unit_key in motion_alerts %}
+                                    <div class="motion-alert">
+                                        🚨<span>INTRUDER ALERT! Motion detected in Floor {{ floor.floorID }}, Unit {{ unit.unitID }}</span>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+                        <h4>Devices:</h4>
+                        <div class="device-list">
+                            {% for floor in house.floors %}
+                                {% for unit in floor.units %}
+                                    {% for device in unit.devicesList %}
+                                        <div class="device-item">
+                                            {% if "light" in device.deviceName %}
+                                                💡
+                                            {% elif "motion" in device.deviceName %}
+                                                {% if device.deviceStatus == "Detected" %}
+                                                    🚨
+                                                {% else %}
+                                                    🕵️
+                                                {% endif %}
+                                            {% else %}
+                                                🔧
+                                            {% endif %}
+                                            <strong>{{ device.deviceName }}</strong>
+                                            — <span class="status-badge {% if device.deviceStatus == 'Detected' %}detected{% else %}{{ device.deviceStatus|lower }}{% endif %}">{{ device.deviceStatus }}</span>
+                                            <div class="last-updated">🕓 Last Updated: {{ device.lastUpdate }}</div>
+                                            <small>
+                                                Location: Floor {{ floor.floorID }}, Unit {{ unit.unitID }}
+                                            </small>
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+
+                        <a href="/house/{{ house.houseID }}" class="house-link">View House</a>
+                        {% if house.houseID == '1' or house.houseID == 1 %}
+                            <a class="house-link" style="background:#2196f3;" target="_blank"
+                            href="https://thingspeak.com/channels/2884625">
+                            📈 View ThingSpeak Chart
+                            </a>
+                        {% elif house.houseID == '2' or house.houseID == 2 %}
+                            <a class="house-link" style="background:#2196f3;" target="_blank"
+                            href="https://thingspeak.com/channels/2884626">
+                            📈 View ThingSpeak Chart
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p><em>No houses found.</em></p>
+            {% endif %}
+        </section>
+
+        <section>
+            <h2>Available Devices</h2>
+            {% if devices %}
+                {% for device in devices %}
+                    <div class="device-info">
+                        <h4>
+                            {% if "light" in device.deviceName %}
+                                💡
+                            {% elif "motion" in device.deviceName %}
+                                {% if device.deviceStatus == "Detected" %}
+                                    🚨
+                                {% else %}
+                                    🕵️
+                                {% endif %}
+                            {% else %}
+                                🔧
+                            {% endif %}
+                            {{ device.deviceName }}
+                        </h4>
+                        <p>Status: <span class="status-badge {% if device.deviceStatus == 'Detected' %}detected{% else %}{{ device.deviceStatus|lower }}{% endif %}">{{ device.deviceStatus }}</span></p>
+                        <p>House ID: {{ device.houseID }}</p>
+                        <p>Floor ID: {{ device.floorID }}</p>
+                        <p>Unit ID: {{ device.unitID }}</p>
+                        <div class="last-updated">🕓 Last Update: {{ device.lastUpdate }}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p><em>No devices found.</em></p>
+            {% endif %}
+        </section>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+        }
+
+        // 🔄 Auto-refresh countdown
+        let countdownValue = 15;
+        const countdownElement = document.querySelector('.countdown');
+        
+        function updateCountdown() {
+            countdownValue -= 1;
+            countdownElement.textContent = countdownValue;
+            
+            if (countdownValue <= 0) {
+                window.location.reload();
+            } else {
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // Start countdown
+        setTimeout(updateCountdown, 1000);
+    </script>
+</body>
+</html>

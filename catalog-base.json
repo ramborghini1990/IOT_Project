@@ -1,0 +1,192 @@
+{
+    "projectOwner": "ThiefDetector Team",
+    "projectName": "ThiefDetector",
+    "lastUpdate": "2025-04-24 15:51:22",
+    "broker": {
+      "IP": "test.mosquitto.org",
+      "port": 1883
+    },
+    "housesList": [
+      {
+        "houseID": "1",
+        "houseName": "Main House",
+        "installationDate": "2024-12-01",
+        "lastUpdate": "2024-12-28 14:30:00",
+        "floors": [
+          {
+            "floorID": "1",
+            "units": [
+              {
+                "unitID": "1",
+                "urlSensors": "http://127.0.0.1:8085/raspberry_1-1-1/devices",
+                "urlActuators": "http://127.0.0.1:8086/arduino_1-1-1/devices",
+                "devicesList": [
+                  {
+                    "deviceID": 10101,
+                    "deviceName": "light_switch",
+                    "deviceStatus": "OFF",
+                    "availableStatuses": ["DISABLE", "OFF", "ON"],
+                    "deviceLocation": { "houseID": "1", "floorID": "1", "unitID": "1" },
+                    "measureType": ["Switch"],
+                    "availableServices": ["MQTT"],
+                    "servicesDetails": [
+                      {
+                        "serviceType": "MQTT",
+                        "topic": ["ThiefDetector/commands/1/1/1/light_switch"]
+                      }
+                    ],
+                    "lastUpdate": "2025-04-24 15:51:14"
+                  }
+                ],
+                "lastUpdate": "2024-12-28 14:30:00"
+              },
+              {
+                "unitID": "2",
+                "urlSensors": "http://127.0.0.1:8085/raspberry_1-1-2/devices",
+                "urlActuators": "http://127.0.0.1:8086/arduino_1-1-2/devices",
+                "devicesList": [
+                  {
+                    "deviceID": 10102,
+                    "deviceName": "light_switch",
+                    "deviceStatus": "OFF",
+                    "availableStatuses": ["DISABLE", "OFF", "ON"],
+                    "deviceLocation": { "houseID": "1", "floorID": "1", "unitID": "2" },
+                    "measureType": ["Switch"],
+                    "availableServices": ["MQTT"],
+                    "servicesDetails": [
+                      {
+                        "serviceType": "MQTT",
+                        "topic": ["ThiefDetector/commands/1/1/2/light_switch"]
+                      }
+                    ],
+                    "lastUpdate": "2025-04-24 15:51:16"
+                  }
+                ],
+                "lastUpdate": "2024-12-28 14:45:00"
+              }
+            ]
+          },
+          {
+            "floorID": "2",
+            "units": [
+              {
+                "unitID": "1",
+                "urlSensors": "http://127.0.0.1:8085/raspberry_1-2-1/devices",
+                "urlActuators": "http://127.0.0.1:8086/arduino_1-2-1/devices",
+                "devicesList": [
+                  {
+                    "deviceID": 10103,
+                    "deviceName": "light_switch",
+                    "deviceStatus": "OFF",
+                    "availableStatuses": ["DISABLE", "OFF", "ON"],
+                    "deviceLocation": { "houseID": "1", "floorID": "2", "unitID": "1" },
+                    "measureType": ["Switch"],
+                    "availableServices": ["MQTT"],
+                    "servicesDetails": [
+                      {
+                        "serviceType": "MQTT",
+                        "topic": ["ThiefDetector/commands/1/2/1/light_switch"]
+                      }
+                    ],
+                    "lastUpdate": "2025-04-24 15:51:18"
+                  }
+                ],
+                "lastUpdate": "2024-12-28 14:30:00"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "houseID": "2",
+        "houseName": "Guest House",
+        "installationDate": "2024-12-05",
+        "lastUpdate": "2024-12-28 14:30:00",
+        "floors": [
+          {
+            "floorID": "1",
+            "units": [
+              {
+                "unitID": "1",
+                "urlSensors": "http://127.0.0.1:8085/raspberry_2-1-1/devices",
+                "urlActuators": "http://127.0.0.1:8086/arduino_2-1-1/devices",
+                "devicesList": [
+                  {
+                    "deviceID": 20101,
+                    "deviceName": "light_switch",
+                    "deviceStatus": "OFF",
+                    "availableStatuses": ["DISABLE", "OFF", "ON"],
+                    "deviceLocation": { "houseID": "2", "floorID": "1", "unitID": "1" },
+                    "measureType": ["Switch"],
+                    "availableServices": ["MQTT"],
+                    "servicesDetails": [
+                      {
+                        "serviceType": "MQTT",
+                        "topic": ["ThiefDetector/commands/2/1/1/light_switch"]
+                      }
+                    ],
+                    "lastUpdate": "2025-04-24 15:51:20"
+                  }
+                ],
+                "lastUpdate": "2024-12-28 14:30:00"
+              },
+              {
+                "unitID": "2",
+                "urlSensors": "http://127.0.0.1:8085/raspberry_2-1-2/devices",
+                "urlActuators": "http://127.0.0.1:8086/arduino_2-1-2/devices",
+                "devicesList": [
+                  {
+                    "deviceID": 20102,
+                    "deviceName": "light_switch",
+                    "deviceStatus": "OFF",
+                    "availableStatuses": ["DISABLE", "OFF", "ON"],
+                    "deviceLocation": { "houseID": "2", "floorID": "1", "unitID": "2" },
+                    "measureType": ["Switch"],
+                    "availableServices": ["MQTT"],
+                    "servicesDetails": [
+                      {
+                        "serviceType": "MQTT",
+                        "topic": ["ThiefDetector/commands/2/1/2/light_switch"]
+                      }
+                    ],
+                    "lastUpdate": "2025-04-24 15:51:22"
+                  }
+                ],
+                "lastUpdate": "2024-12-28 14:45:00"
+              }
+            ]
+          },
+          {
+            "floorID": "2",
+            "units": [
+              {
+                "unitID": "1",
+                "urlSensors": "http://127.0.0.1:8085/raspberry_2-2-1/devices",
+                "urlActuators": "http://127.0.0.1:8086/arduino_2-2-1/devices",
+                "devicesList": [
+                  {
+                    "deviceID": 20103,
+                    "deviceName": "light_switch",
+                    "deviceStatus": "OFF",
+                    "availableStatuses": ["DISABLE", "OFF", "ON"],
+                    "deviceLocation": { "houseID": "2", "floorID": "2", "unitID": "1" },
+                    "measureType": ["Switch"],
+                    "availableServices": ["MQTT"],
+                    "servicesDetails": [
+                      {
+                        "serviceType": "MQTT",
+                        "topic": ["ThiefDetector/commands/2/2/1/light_switch"]
+                      }
+                    ],
+                    "lastUpdate": "2025-04-24 15:51:24"
+                  }
+                ],
+                "lastUpdate": "2024-12-28 14:30:00"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  
