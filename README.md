@@ -8,7 +8,7 @@ A comprehensive, microservice-based IoT system for home security monitoring. Thi
 
 ---
 
-## 🌟 Features
+## Features
 
 - **Microservice Architecture**: The system is broken down into independent services for scalability and maintainability.
 - **Real-time Monitoring**: A web interface provides a live overview of all connected devices and their statuses.
@@ -20,7 +20,7 @@ A comprehensive, microservice-based IoT system for home security monitoring. Thi
 
 ---
 
-## 🏛️ Architecture Overview
+## Architecture Overview
 
 The Thief Detector system follows a microservice architecture. Each component is a standalone service that communicates with others through REST APIs and an MQTT message broker. This decoupled design makes the system robust, scalable, and easy to modify.
 
@@ -37,7 +37,7 @@ Here’s a high-level overview of the data flow:
 
 ---
 
-## 🧩 Components
+## Components
 
 ### 1. Catalog Registry (`catalog_registry.py`)
 - **Purpose**: The single source of truth for the entire system. It's a RESTful service that manages a `catalog.json` file.
@@ -88,7 +88,7 @@ Here’s a high-level overview of the data flow:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 To run the system, you'll need to start each microservice, preferably in a separate terminal.
 
@@ -140,3 +140,4 @@ Start the services in the following order:
     ```
 
 Once all services are running, you can access the web interface at `http://127.0.0.1:5000/`.
+
